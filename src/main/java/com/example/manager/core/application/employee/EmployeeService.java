@@ -2,6 +2,7 @@ package com.example.manager.core.application.employee;
 
 import com.example.manager.core.application.repositories.EmployeeRepository;
 import com.example.manager.core.domain.Employee;
+import com.example.manager.core.domain.EmployeeSimplified;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,21 @@ public class EmployeeService {
         else
         {
             return false;
+        }
+    }
+    public Employee fillUnusedFields(EmployeeSimplified employeeSimplified, Optional<Long> id){
+        if(id.isPresent()){
+        return new Employee(id.get(), employeeSimplified.getTeam(),
+                "","", employeeSimplified.getAvailability(),
+                employeeSimplified.getName(), employeeSimplified.getSurname(),
+                employeeSimplified.getUsername(), employeeSimplified.getPassword());
+        }
+        else
+        {
+            return new Employee(0L, employeeSimplified.getTeam(),
+                    "","", employeeSimplified.getAvailability(),
+                    employeeSimplified.getName(), employeeSimplified.getSurname(),
+                    employeeSimplified.getUsername(), employeeSimplified.getPassword());
         }
     }
 }

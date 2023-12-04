@@ -1,12 +1,13 @@
 package com.example.manager.core.application.employee;
 import com.example.manager.core.domain.Employee;
+import com.example.manager.core.domain.EmployeeSimplified;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeInterface {
     // save operation
-    Employee saveEmployee(Employee employee);
+    Employee saveEmployee(EmployeeSimplified employee);
 
     // read operation
     List<Employee> getEmployeeList();
@@ -15,7 +16,7 @@ public interface EmployeeInterface {
     public Employee findEmployeeByUsername(String username);
 
     // update operation
-    Optional<Employee> updateEmployeeById(Employee employee, Long employeeId);
+    Optional<Employee> updateEmployeeById(EmployeeSimplified employee, Long employeeId);
 
     // delete operation
     void deleteEmployeeById(Long employeeId);

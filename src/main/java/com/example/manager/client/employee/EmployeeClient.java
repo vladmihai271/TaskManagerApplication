@@ -4,6 +4,7 @@ import com.example.manager.core.application.employee.EmployeeService;
 import com.example.manager.core.application.repositories.EmployeeRepository;
 import com.example.manager.core.application.employee.EmployeeInterface;
 import com.example.manager.core.domain.Employee;
+import com.example.manager.core.domain.EmployeeSimplified;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +23,10 @@ public class EmployeeClient implements EmployeeInterface {
 
 
     @Override
-    public Employee saveEmployee(Employee employee) {
-        employee.setUid(System.currentTimeMillis());
-        return employeeRepository.save(employee);
+    public Employee saveEmployee(EmployeeSimplified employee) {
+        Employee resultEmployee = employeeService.fillUnusedFields(employee, Optional.empty());
+        resultEmployee.setUid(System.currentTimeMillis());
+        return employeeRepository.save(resultEmployee);
     }
     @Override
     public List<Employee> getEmployeeList() {
@@ -41,9 +43,10 @@ public class EmployeeClient implements EmployeeInterface {
         return (Employee) employeeRepository.findByUsername(username);
     }
     @Override
-    public Optional<Employee> updateEmployeeById(Employee employee, Long employeeId) {
+    public Optional<Employee> updateEmployeeById(EmployeeSimplified employee, Long employeeId) {
         if(employeeService.deleteEmployeeById(employeeId)){
-            return Optional.of(employeeRepository.save(employee));
+            Employee resultEmployee = employeeService.fillUnusedFields(employee, Optional.of(employeeId));
+            return Optional.of(employeeRepository.save(resultEmployee));
         }
         else
         {
