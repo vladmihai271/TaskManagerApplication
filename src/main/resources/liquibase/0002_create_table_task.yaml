@@ -52,7 +52,7 @@ databaseChangeLog:
                        nullable: false
                 -  column:
                      name: storyPoints
-                     type: varchar
+                     type: int
                      constraints:
                        nullable: false
        rollback:

@@ -75,7 +75,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
     @RequestMapping(value = "/employees/{employeeUsername}", method = RequestMethod.GET)
-    public Employee getEmployeeByUsername(@PathVariable String employeeUsername)
+    public Optional<Employee> getEmployeeByUsername(@PathVariable String employeeUsername)
     {
         return employeeInterface.findEmployeeByUsername(employeeUsername);
     }
@@ -87,7 +87,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
     @RequestMapping(value = "/employees/{employeeId}", method = RequestMethod.DELETE)
-    public void getEmployeeByUsername(@PathVariable Long employeeId)
+    public void deleteEmployeeById(@PathVariable Long employeeId)
     {
         employeeInterface.deleteEmployeeById(employeeId);
     }

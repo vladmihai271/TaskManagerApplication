@@ -39,8 +39,8 @@ public class EmployeeClient implements EmployeeInterface {
     }
 
     @Override
-    public Employee findEmployeeByUsername(String username) {
-        return (Employee) employeeRepository.findByUsername(username);
+    public Optional<Employee> findEmployeeByUsername(String username) {
+        return Optional.ofNullable(employeeRepository.findByUsername(username));
     }
     @Override
     public Optional<Employee> updateEmployeeById(EmployeeSimplified employee, Long employeeId) {

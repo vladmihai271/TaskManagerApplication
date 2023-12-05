@@ -23,5 +23,5 @@ public class Task {
     private String sprint;
     private String project;
     private String assignedTo;
-    private String storyPoints;
+    private Integer storyPoints;
 }

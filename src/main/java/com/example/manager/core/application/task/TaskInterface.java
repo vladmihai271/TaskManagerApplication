@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskInterface {
-    Task saveTask(Task task);
+    Optional<Task> saveTask(Task task);
     Optional<Task> getTaskById(Long id);
     Optional<Task> getTaskByTitle(String title);
     List<Task> getAllTasks();

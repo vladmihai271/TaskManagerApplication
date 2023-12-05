@@ -13,7 +13,7 @@ public interface EmployeeInterface {
     List<Employee> getEmployeeList();
     Optional<Employee> getEmployeeById(Long employeeId);
 
-    public Employee findEmployeeByUsername(String username);
+    public Optional<Employee> findEmployeeByUsername(String username);
 
     // update operation
     Optional<Employee> updateEmployeeById(EmployeeSimplified employee, Long employeeId);

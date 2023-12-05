@@ -1,6 +1,8 @@
 package com.example.manager.client.task;
 
+import com.example.manager.core.application.repositories.TaskRepository;
 import com.example.manager.core.application.task.TaskInterface;
+import com.example.manager.core.application.task.TaskService;
 import com.example.manager.core.domain.Task;
 import org.springframework.stereotype.Service;
 
@@ -9,24 +11,39 @@ import java.util.Optional;
 
 @Service
 public class TaskClient implements TaskInterface {
+    private final TaskRepository taskRepository;
+    private final TaskService taskService;
+
+    public TaskClient(TaskRepository taskRepository, TaskService taskService) {
+        this.taskRepository = taskRepository;
+        this.taskService = taskService;
+    }
+
     @Override
-    public Task saveTask(Task task) {
-        return null;
+    public Optional<Task> saveTask(Task task) {  //maybe should throw an exception is task title already exists
+        List<Task> allTasks = this.getAllTasks();
+        for(Task taskIn : allTasks){
+            if(taskIn.getTitle().equals(task.getTitle())){
+                return Optional.empty();
+            }
+        }
+        taskService.addTaskToEmployee(task); //ADD TASK TO SPRINT AND/OR PROJECT WHEN IMPLEMENTED
+        return Optional.of(task);
     }
 
     @Override
     public Optional<Task> getTaskById(Long id) {
-        return Optional.empty();
+        return taskRepository.findById(id);
     }
 
     @Override
     public Optional<Task> getTaskByTitle(String title) {
-        return Optional.empty();
+        return Optional.ofNullable(taskRepository.findByTitle(title));
     }
 
     @Override
     public List<Task> getAllTasks() {
-        return null;
+        return (List<Task>) taskRepository.findAll();
     }
 
     @Override
@@ -36,6 +53,6 @@ public class TaskClient implements TaskInterface {
 
     @Override
     public void deleteTaskById(Long id) {
-
+        taskRepository.deleteById(id);
     }
 }

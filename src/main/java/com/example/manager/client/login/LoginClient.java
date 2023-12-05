@@ -20,7 +20,7 @@ public class LoginClient implements LoginInterface {
 
     @Override
     public ResponseEntity<Map<String, Object>> login(String username, String password) {
-        Employee loggedEmployee = (Employee) employeeRepository.findByUsername(username);
+        Employee loggedEmployee = employeeRepository.findByUsername(username);
         return loginService.checkEmployeeExists(loggedEmployee,username,password);
     }
 }
