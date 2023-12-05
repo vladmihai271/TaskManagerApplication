@@ -79,4 +79,16 @@ public class EmployeeController {
     {
         return employeeInterface.findEmployeeByUsername(employeeUsername);
     }
+    @Operation(summary = "Deletes one employee by id",
+            description = "Deletes one employee by id. " +
+                    "If employee with id is not found nothing happens, returned status is 200-OK")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully received"),
+            @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
+    })
+    @RequestMapping(value = "/employees/{employeeId}", method = RequestMethod.DELETE)
+    public void getEmployeeByUsername(@PathVariable Long employeeId)
+    {
+        employeeInterface.deleteEmployeeById(employeeId);
+    }
 }

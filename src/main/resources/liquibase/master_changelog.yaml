@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: liquibase/0001_create_table_employee.yaml
+  - include:
+      file: liquibase/0002_create_table_task.yaml
