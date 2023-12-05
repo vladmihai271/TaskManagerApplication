@@ -48,7 +48,7 @@ public class TaskClient implements TaskInterface {
 
     @Override
     public Optional<Task> updateTaskById(Long id, Task task) {
-        taskService.deleteTaskFromEmployee(id);
+        taskService.completeMissingFieldsFromUpdateTaskObject(id, task);
         deleteTaskById(id);
         saveTask(task);
         return Optional.empty();
@@ -56,6 +56,7 @@ public class TaskClient implements TaskInterface {
 
     @Override
     public void deleteTaskById(Long id) {
+        taskService.deleteTaskFromEmployee(id);
         taskRepository.deleteById(id);
     }
 }

@@ -58,4 +58,50 @@ public class TaskService {
             employeeService.saveEmployee(employee.get());
         }
     }
+    public Task completeMissingFieldsFromUpdateTaskObject(Long id, Task newTaskReceivedAtUpdate){
+        Optional<Task> taskToBeChanged = taskRepository.findById(id);
+        if(taskToBeChanged.isEmpty()){
+            return null;
+        }
+        if(newTaskReceivedAtUpdate.getTitle().isEmpty() ||
+                newTaskReceivedAtUpdate.getTitle().isBlank() ||
+                newTaskReceivedAtUpdate.getTitle() == null)
+        {
+            newTaskReceivedAtUpdate.setTitle(taskToBeChanged.get().getTitle());
+        }
+
+        if(newTaskReceivedAtUpdate.getAssignedTo().isEmpty() ||
+                newTaskReceivedAtUpdate.getAssignedTo().isBlank() ||
+                newTaskReceivedAtUpdate.getAssignedTo() == null)
+        {
+            newTaskReceivedAtUpdate.setAssignedTo(taskToBeChanged.get().getAssignedTo());
+        }
+
+        if(newTaskReceivedAtUpdate.getSprint().isEmpty() ||
+                newTaskReceivedAtUpdate.getSprint().isBlank() ||
+                newTaskReceivedAtUpdate.getSprint() == null)
+        {
+            newTaskReceivedAtUpdate.setSprint(taskToBeChanged.get().getSprint());
+        }
+
+        if(newTaskReceivedAtUpdate.getProject().isEmpty() ||
+                newTaskReceivedAtUpdate.getProject().isBlank() ||
+                newTaskReceivedAtUpdate.getProject() == null)
+        {
+            newTaskReceivedAtUpdate.setProject(taskToBeChanged.get().getProject());
+        }
+
+        if(newTaskReceivedAtUpdate.getDescription().isEmpty() ||
+                newTaskReceivedAtUpdate.getDescription().isBlank() ||
+                newTaskReceivedAtUpdate.getDescription() == null)
+        {
+            newTaskReceivedAtUpdate.setDescription(taskToBeChanged.get().getDescription());
+        }
+
+        if(newTaskReceivedAtUpdate.getStoryPoints() == null)
+        {
+            newTaskReceivedAtUpdate.setStoryPoints(taskToBeChanged.get().getStoryPoints());
+        }
+        return newTaskReceivedAtUpdate;
+    }
 }
