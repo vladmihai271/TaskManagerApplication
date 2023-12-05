@@ -3,12 +3,8 @@ package com.example.manager.core.application.employee;
 import com.example.manager.core.application.repositories.EmployeeRepository;
 import com.example.manager.core.domain.Employee;
 import com.example.manager.core.domain.EmployeeSimplified;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -46,5 +42,14 @@ public class EmployeeService {
                     employeeSimplified.getName(), employeeSimplified.getSurname(),
                     employeeSimplified.getUsername(), employeeSimplified.getPassword());
         }
+    }
+    public Employee saveEmployeeSimplified(EmployeeSimplified employee) {
+        Employee resultEmployee = fillUnusedFields(employee, Optional.empty());
+        resultEmployee.setUid(System.currentTimeMillis());
+        return employeeRepository.save(resultEmployee);
+    }
+    public Employee saveEmployee(Employee employee) {
+        employee.setUid(System.currentTimeMillis());
+        return employeeRepository.save(employee);
     }
 }

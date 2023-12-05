@@ -1,5 +1,6 @@
 package com.example.manager.core.application.task;
 
+import com.example.manager.core.application.employee.EmployeeService;
 import com.example.manager.core.application.repositories.EmployeeRepository;
 import com.example.manager.core.application.repositories.TaskRepository;
 import com.example.manager.core.domain.Employee;
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class TaskService {
     private final EmployeeRepository employeeRepository;
     private final TaskRepository taskRepository;
+    private final EmployeeService employeeService;
 
-    public TaskService(EmployeeRepository employeeRepository, TaskRepository taskRepository) {
+    public TaskService(EmployeeRepository employeeRepository, TaskRepository taskRepository, EmployeeService employeeService) {
         this.employeeRepository = employeeRepository;
         this.taskRepository = taskRepository;
+        this.employeeService = employeeService;
     }
 
     public void addTaskToEmployee(Task task){
@@ -40,7 +43,7 @@ public class TaskService {
         }
         return Optional.empty();
     }
-    public Optional<Employee> deleteTaskFromEmployee(Long taskId){
+    public void deleteTaskFromEmployee(Long taskId){
         Optional<Long> employeeId = findEmployeeByTaskId(taskId);
         Optional<Task> task = taskRepository.findById(taskId);
         Optional<Employee> employee = Optional.empty();
@@ -51,8 +54,8 @@ public class TaskService {
             String employeeTasks = employee.get().getTasks();
             employeeTasks = employeeTasks.replace("," + task.get().getTitle(),"");
             employee.get().setTasks(employeeTasks);
-            return employee;
+            employeeRepository.deleteById(employeeId.get());
+            employeeService.saveEmployee(employee.get());
         }
-        return Optional.empty();
     }
 }

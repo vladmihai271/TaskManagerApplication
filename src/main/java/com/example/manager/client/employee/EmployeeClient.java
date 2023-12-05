@@ -24,9 +24,7 @@ public class EmployeeClient implements EmployeeInterface {
 
     @Override
     public Employee saveEmployee(EmployeeSimplified employee) {
-        Employee resultEmployee = employeeService.fillUnusedFields(employee, Optional.empty());
-        resultEmployee.setUid(System.currentTimeMillis());
-        return employeeRepository.save(resultEmployee);
+        return employeeService.saveEmployeeSimplified(employee);
     }
     @Override
     public List<Employee> getEmployeeList() {
