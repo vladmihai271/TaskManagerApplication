@@ -1,0 +1,55 @@
+databaseChangeLog:
+  -  property:
+       dbms: postgresql
+       name: table_name
+       value: sprint
+       global: false
+  -  changeSet:
+       id: "0003"
+       author: vlad
+       preConditions:
+         # check if the table does not exist
+         - not:
+             - tableExists:
+                 - tableName: ${table_name}
+         # behavior when check fails
+         - onFail: CONTINUE
+         # message displayed when the check fails
+         - onFailMessage: Table "${table_name}" already exists!
+       changes:
+         -  createTable:
+              tableName: ${table_name}
+              columns:
+                -  column:
+                     name: uid
+                     type: bigint
+                     autoIncrement: true
+                     constraints:
+                       primaryKey: true
+                       nullable: false
+                -  column:
+                     name: team
+                     type: varchar
+                -  column:
+                     name: tasks
+                     type: varchar
+                     constraints:
+                       nullable: false
+                -  column:
+                     name: status
+                     type: varchar
+                     constraints:
+                       nullable: false
+                -  column:
+                     name: project
+                     type: varchar
+                     constraints:
+                       nullable: false
+                -  column:
+                     name: title
+                     type: varchar
+                     constraints:
+                       nullable: false
+       rollback:
+         - dropTable:
+             tableName: ${table_name}

@@ -24,6 +24,7 @@ public class EmployeeService {
         Optional<Employee> employeeToBeDeleted = employeeRepository.findById(employeeId);
         if(employeeToBeDeleted.isPresent())
         {
+            removeEmployeeFromHisTasks(employeeId);
             employeeRepository.deleteById(employeeId);
             return true;
         }
@@ -68,5 +69,56 @@ public class EmployeeService {
                 taskRepository.save(task);
             }
         }
+    }
+
+    public Employee completeMissingFieldsFromUpdateEmployeeObject(Long id, EmployeeSimplified newEmployeeReceivedAtUpdate){
+        Optional<Employee> employeeToBeChanged = employeeRepository.findById(id);
+        if(employeeToBeChanged.isEmpty()){
+            return null;
+        }
+        if(newEmployeeReceivedAtUpdate.getAvailability().isEmpty() ||
+                newEmployeeReceivedAtUpdate.getAvailability().isBlank() ||
+                newEmployeeReceivedAtUpdate.getAvailability() == null)
+        {
+            newEmployeeReceivedAtUpdate.setAvailability(employeeToBeChanged.get().getAvailability());
+        }
+        if(newEmployeeReceivedAtUpdate.getTeam().isEmpty() ||
+                newEmployeeReceivedAtUpdate.getTeam().isBlank() ||
+                newEmployeeReceivedAtUpdate.getTeam() == null)
+        {
+            newEmployeeReceivedAtUpdate.setTeam(employeeToBeChanged.get().getTeam());
+        }
+        if(newEmployeeReceivedAtUpdate.getSurname().isEmpty() ||
+                newEmployeeReceivedAtUpdate.getSurname().isBlank() ||
+                newEmployeeReceivedAtUpdate.getSurname() == null)
+        {
+            newEmployeeReceivedAtUpdate.setSurname(employeeToBeChanged.get().getSurname());
+        }
+        if(newEmployeeReceivedAtUpdate.getName().isEmpty() ||
+                newEmployeeReceivedAtUpdate.getName().isBlank() ||
+                newEmployeeReceivedAtUpdate.getName() == null)
+        {
+            newEmployeeReceivedAtUpdate.setName(employeeToBeChanged.get().getName());
+        }
+        if(newEmployeeReceivedAtUpdate.getUsername().isEmpty() ||
+                newEmployeeReceivedAtUpdate.getUsername().isBlank() ||
+                newEmployeeReceivedAtUpdate.getUsername() == null)
+        {
+            newEmployeeReceivedAtUpdate.setUsername(employeeToBeChanged.get().getUsername());
+        }
+        if(newEmployeeReceivedAtUpdate.getPassword().isEmpty() ||
+                newEmployeeReceivedAtUpdate.getPassword().isBlank() ||
+                newEmployeeReceivedAtUpdate.getPassword() == null)
+        {
+            newEmployeeReceivedAtUpdate.setPassword(employeeToBeChanged.get().getPassword());
+        }
+        employeeToBeChanged.get().setPassword(newEmployeeReceivedAtUpdate.getPassword());
+        employeeToBeChanged.get().setTeam(newEmployeeReceivedAtUpdate.getTeam());
+        employeeToBeChanged.get().setAvailability(newEmployeeReceivedAtUpdate.getAvailability());
+        employeeToBeChanged.get().setSurname(newEmployeeReceivedAtUpdate.getSurname());
+        employeeToBeChanged.get().setUsername(newEmployeeReceivedAtUpdate.getUsername());
+        employeeToBeChanged.get().setName(newEmployeeReceivedAtUpdate.getName());
+
+        return employeeToBeChanged.get();
     }
 }

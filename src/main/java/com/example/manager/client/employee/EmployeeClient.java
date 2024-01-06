@@ -42,9 +42,9 @@ public class EmployeeClient implements EmployeeInterface {
     }
     @Override
     public Optional<Employee> updateEmployeeById(EmployeeSimplified employee, Long employeeId) {
+        Employee newEmployee = employeeService.completeMissingFieldsFromUpdateEmployeeObject(employeeId, employee);
         if(employeeService.deleteEmployeeById(employeeId)){
-            Employee resultEmployee = employeeService.fillUnusedFields(employee, Optional.of(employeeId));
-            return Optional.of(employeeRepository.save(resultEmployee));
+            return Optional.of(employeeRepository.save(newEmployee));
         }
         else
         {
@@ -53,6 +53,6 @@ public class EmployeeClient implements EmployeeInterface {
     }
     @Override
     public void deleteEmployeeById(Long employeeId) {
-        employeeRepository.deleteById(employeeId);
+        employeeService.deleteEmployeeById(employeeId);
     }
 }
