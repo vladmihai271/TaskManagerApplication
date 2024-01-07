@@ -5,3 +5,5 @@ databaseChangeLog:
       file: liquibase/0002_create_table_task.yaml
   - include:
       file: liquibase/0003_create_table_sprint.yaml
+  - include:
+      file: liquibase/0004_create_table_project.yaml
