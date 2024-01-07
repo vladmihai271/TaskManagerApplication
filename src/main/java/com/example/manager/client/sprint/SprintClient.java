@@ -42,12 +42,15 @@ public class SprintClient implements SprintInterface {
     }
 
     @Override
-    public Optional<Sprint> updateSprintById(Sprint employee, Long sprintId) {
+    public Optional<Sprint> updateSprintById(SprintSimplified sprint, Long sprintId) {
+        sprintRepository.deleteById(sprintId);
+        saveSprintSimplified(sprint);
         return Optional.empty();
     }
 
     @Override
     public void deleteSprintById(Long sprintId) { //IMPLEMENTED METHODS IN SprintService
-
+        sprintService.deleteSprintFromTasks(sprintId);
+        sprintRepository.deleteById(sprintId);
     }
 }

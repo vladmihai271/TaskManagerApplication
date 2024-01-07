@@ -19,7 +19,7 @@ public interface SprintInterface {
     public Optional<Sprint> findSprintByTitle(String title);
 
     // update operation
-    Optional<Sprint> updateSprintById(Sprint employee, Long sprintId);
+    Optional<Sprint> updateSprintById(SprintSimplified employee, Long sprintId);
 
     // delete operation
     void deleteSprintById(Long sprintId);
