@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "employee", schema="public")
+@Table(name = "task", schema="public")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +23,6 @@ public class Task {
     private String sprint;
     private String status;
     private String project;
-    private String assignedTo;
+    private String assignee;
     private Integer storyPoints;
 }

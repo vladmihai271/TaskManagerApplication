@@ -27,7 +27,7 @@ public class TaskService {
     }
 
     public void addTaskToEmployee(Task task){
-        Employee employeeToTask = employeeRepository.findByUsername(task.getAssignedTo());
+        Employee employeeToTask = employeeRepository.findByUsername(task.getAssignee());
         if(employeeToTask.getTasks().isBlank() || employeeToTask.getTasks().isEmpty()){
             employeeToTask.setTasks(task.getTitle());
         } else {
@@ -87,11 +87,11 @@ public class TaskService {
         {
             newTaskReceivedAtUpdate.setStatus(taskToBeChanged.get().getStatus());
         }
-        if(newTaskReceivedAtUpdate.getAssignedTo().isEmpty() ||
-                newTaskReceivedAtUpdate.getAssignedTo().isBlank() ||
-                newTaskReceivedAtUpdate.getAssignedTo() == null)
+        if(newTaskReceivedAtUpdate.getAssignee().isEmpty() ||
+                newTaskReceivedAtUpdate.getAssignee().isBlank() ||
+                newTaskReceivedAtUpdate.getAssignee() == null)
         {
-            newTaskReceivedAtUpdate.setAssignedTo(taskToBeChanged.get().getAssignedTo());
+            newTaskReceivedAtUpdate.setAssignee(taskToBeChanged.get().getAssignee());
         }
 
         if(newTaskReceivedAtUpdate.getSprint().isEmpty() ||

@@ -21,7 +21,7 @@ public class TaskClient implements TaskInterface {
 
     @Override
     public Optional<Task> saveTask(Task task) {  //maybe should throw an exception is task title already exists
-        List<Task> allTasks = this.getAllTasks();
+        List<Task> allTasks = (List<Task>) taskRepository.findAll();
         for(Task taskIn : allTasks){
             if(taskIn.getTitle().equals(task.getTitle())){
                 return Optional.empty();
@@ -29,7 +29,7 @@ public class TaskClient implements TaskInterface {
         }
         taskService.addTaskToEmployee(task); //ADD TASK TO SPRINT AND/OR PROJECT WHEN IMPLEMENTED
         taskService.addTaskToSprint(task);
-        return Optional.of(task);
+        return Optional.of(taskRepository.save(task));
     }
 
     @Override

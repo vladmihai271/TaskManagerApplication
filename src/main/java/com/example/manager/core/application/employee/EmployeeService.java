@@ -64,7 +64,7 @@ public class EmployeeService {
             String[] tasksTitles = tasks.split(",");
             for(int i=0;i<tasksTitles.length;i++) {
                 Task task = taskRepository.findByTitle(tasksTitles[i]);
-                task.setAssignedTo("");
+                task.setAssignee("");
                 taskRepository.deleteById(task.getUid());
                 taskRepository.save(task);
             }

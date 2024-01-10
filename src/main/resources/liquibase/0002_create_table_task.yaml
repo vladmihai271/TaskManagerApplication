@@ -46,7 +46,7 @@ databaseChangeLog:
                      constraints:
                        nullable: false
                 -  column:
-                     name: assignedTo
+                     name: assignee
                      type: varchar
                      constraints:
                        nullable: false
@@ -56,7 +56,7 @@ databaseChangeLog:
                      constraints:
                        nullable: false
                 -  column:
-                     name: storyPoints
+                     name: story_points
                      type: int
                      constraints:
                        nullable: false
