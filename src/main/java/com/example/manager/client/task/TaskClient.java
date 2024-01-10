@@ -28,6 +28,7 @@ public class TaskClient implements TaskInterface {
             }
         }
         taskService.addTaskToEmployee(task); //ADD TASK TO SPRINT AND/OR PROJECT WHEN IMPLEMENTED
+        taskService.addTaskToSprint(task);
         return Optional.of(task);
     }
 

@@ -34,11 +34,12 @@ public class ProjectClient implements ProjectInterface {
 
     @Override
     public Optional<Project> updateProjectById(Project project, Long projectId) {
-        return Optional.empty();
+        projectRepository.deleteById(projectId);
+        return Optional.of(projectRepository.save(project));
     }
 
     @Override
     public void deleteProjectById(Long uid) {
-
+        projectRepository.deleteById(uid);
     }
 }

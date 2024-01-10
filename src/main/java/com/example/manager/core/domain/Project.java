@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Builder
 public class Project {
+    @Id
     private Long uid;
     private String team;
     private String status;

@@ -21,6 +21,7 @@ public class Task {
     private String title;
     private String description;
     private String sprint;
+    private String status;
     private String project;
     private String assignedTo;
     private Integer storyPoints;

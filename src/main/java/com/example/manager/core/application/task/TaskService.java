@@ -2,8 +2,10 @@ package com.example.manager.core.application.task;
 
 import com.example.manager.core.application.employee.EmployeeService;
 import com.example.manager.core.application.repositories.EmployeeRepository;
+import com.example.manager.core.application.repositories.SprintRepository;
 import com.example.manager.core.application.repositories.TaskRepository;
 import com.example.manager.core.domain.Employee;
+import com.example.manager.core.domain.Sprint;
 import com.example.manager.core.domain.Task;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,13 @@ public class TaskService {
     private final EmployeeRepository employeeRepository;
     private final TaskRepository taskRepository;
     private final EmployeeService employeeService;
+    private final SprintRepository sprintRepository;
 
-    public TaskService(EmployeeRepository employeeRepository, TaskRepository taskRepository, EmployeeService employeeService) {
+    public TaskService(EmployeeRepository employeeRepository, TaskRepository taskRepository, EmployeeService employeeService, SprintRepository sprintRepository) {
         this.employeeRepository = employeeRepository;
         this.taskRepository = taskRepository;
         this.employeeService = employeeService;
+        this.sprintRepository = sprintRepository;
     }
 
     public void addTaskToEmployee(Task task){
@@ -28,6 +32,14 @@ public class TaskService {
             employeeToTask.setTasks(task.getTitle());
         } else {
             employeeToTask.setTasks(employeeToTask.getTasks()+","+task.getTitle());
+        }
+    }
+    public void addTaskToSprint(Task task){
+        Sprint sprintToTask = sprintRepository.findByTitle(task.getSprint());
+        if(sprintToTask.getTasks().isBlank() || sprintToTask.getTasks().isEmpty()){
+            sprintToTask.setTasks(task.getTitle());
+        } else {
+            sprintToTask.setTasks(sprintToTask.getTasks()+","+task.getTitle());
         }
     }
     public Optional<Long> findEmployeeByTaskId(Long taskId){
@@ -69,7 +81,12 @@ public class TaskService {
         {
             newTaskReceivedAtUpdate.setTitle(taskToBeChanged.get().getTitle());
         }
-
+        if(newTaskReceivedAtUpdate.getStatus().isEmpty() ||
+                newTaskReceivedAtUpdate.getStatus().isBlank() ||
+                newTaskReceivedAtUpdate.getStatus() == null)
+        {
+            newTaskReceivedAtUpdate.setStatus(taskToBeChanged.get().getStatus());
+        }
         if(newTaskReceivedAtUpdate.getAssignedTo().isEmpty() ||
                 newTaskReceivedAtUpdate.getAssignedTo().isBlank() ||
                 newTaskReceivedAtUpdate.getAssignedTo() == null)
