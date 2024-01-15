@@ -35,6 +35,8 @@ public class SprintTest {
                 "status", "projec2t","title"))).isFalse();
         assertThat(sprint.equals(new Sprint(1L,"team","task1,",
                 "status", "project","t2itle"))).isFalse();
+        assertThat(sprint.hashCode()).isNotEqualTo(new Sprint(1L,"teamw","task1,",
+                "status", "project","title").hashCode());
         assertDoesNotThrow(() -> sprint.setTeam("team"));
         assertDoesNotThrow(() -> sprint.setTasks("task1,"));
         assertDoesNotThrow(() -> sprint.setStatus("status"));

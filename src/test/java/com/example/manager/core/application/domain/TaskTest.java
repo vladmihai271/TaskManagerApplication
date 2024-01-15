@@ -22,6 +22,8 @@ public class TaskTest {
         assertThat(task.getProject()).isEqualTo("project");
         assertThat(task.getAssignee()).isEqualTo("asignee");
         assertThat(task.getStoryPoints()).isEqualTo(3);
+        assertThat(task.hashCode()).isNotEqualTo(new Task(1L,"title","description","sprint",
+                "status","project","asignefe",3).hashCode());
         assertThat(task.toString()).isEqualTo("Task(uid=1, title=title, description=description, sprint=sprint, status=status, project=project, assignee=asignee, storyPoints=3)");
         assertDoesNotThrow(() -> task.setTitle("title"));
         assertDoesNotThrow(() -> task.setDescription("description"));

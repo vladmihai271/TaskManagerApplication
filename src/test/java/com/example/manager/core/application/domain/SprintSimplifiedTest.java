@@ -30,6 +30,8 @@ public class SprintSimplifiedTest {
                 "team", "sta2tus", "project", "title"))).isFalse();
         assertThat(sprintSimplified.equals(new SprintSimplified(1L,
                 "tea2m", "status", "project", "title"))).isFalse();
+        assertThat(sprintSimplified.hashCode()).isNotEqualTo(new SprintSimplified(1L,
+                "teamw", "status", "project", "title").hashCode());
         assertDoesNotThrow(() -> sprintSimplified.setTeam("team"));
         assertDoesNotThrow(() -> sprintSimplified.setStatus("status"));
         assertDoesNotThrow(() -> sprintSimplified.setProject("project"));

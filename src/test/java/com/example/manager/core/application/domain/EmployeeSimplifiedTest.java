@@ -22,6 +22,9 @@ public class EmployeeSimplifiedTest {
         assertThat(employeeSimplified.getUsername().equals("username"));
         assertThat(employeeSimplified.getPassword().equals("password"));
         assertThat(employeeSimplified.getSecurityAccess().equals("securityAccess"));
+        assertThat(employeeSimplified.hashCode()).isNotEqualTo(new EmployeeSimplified("teamw",
+                "availability", "name", "surname", "username", "password",
+                "securityAccess").hashCode());
         assertDoesNotThrow(() -> employeeSimplified.setTeam("team"));
         assertDoesNotThrow(() -> employeeSimplified.setAvailability("availability"));
         assertDoesNotThrow(() -> employeeSimplified.setName("name"));

@@ -24,6 +24,9 @@ public class EmployeeTest {
         assertThat(employee.toString()).isEqualTo("Employee(uid=1, team=team, tasks=tasks, projects=projects, availability=availability, name=name," +
                 " surname=surname, username=username, password=password, securityAccess=securityAccess)");
         assertThat(employee.getSecurityAccess()).isEqualTo("securityAccess");
+        assertThat(employee.hashCode()).isNotEqualTo(new Employee(1L,"teamw","tasks","projects",
+                "availability","name","surname","username",
+                "password", "securityAccess").hashCode());
         assertDoesNotThrow(() -> employee.setTeam("team"));
         assertDoesNotThrow(() -> employee.setAvailability("availability"));
         assertDoesNotThrow(() -> employee.setName("name"));
