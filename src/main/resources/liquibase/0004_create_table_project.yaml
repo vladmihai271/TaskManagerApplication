@@ -45,6 +45,11 @@ databaseChangeLog:
                      type: varchar
                      constraints:
                        nullable: false
+                -  column:
+                     name: hidden
+                     type: boolean
+                     constraints:
+                       nullable: false
        rollback:
          - dropTable:
              tableName: ${table_name}

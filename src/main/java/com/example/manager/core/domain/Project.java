@@ -20,4 +20,5 @@ public class Project {
     private String status;
     private String title;
     private String description;
+    private boolean hidden;
 }

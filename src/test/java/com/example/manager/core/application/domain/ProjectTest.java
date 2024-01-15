@@ -12,20 +12,22 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 public class ProjectTest {
     @Test
     public void test() {
-        Project project = new Project(1L,"team","status","title","description");
+        Project project = new Project(1L,"team","status","title","description", false);
         assertThat(project.getUid()).isEqualTo(1L);
         assertThat(project.getTeam()).isEqualTo("team");
         assertThat(project.getStatus()).isEqualTo("status");
         assertThat(project.getTitle()).isEqualTo("title");
         assertThat(project.getDescription()).isEqualTo("description");
-        assertThat(project.toString()).isEqualTo("Project(uid=1, team=team, status=status, title=title, description=description)");
-        assertThat(project.hashCode()).isNotEqualTo(new Project(1L,"teamw","status","title","description").hashCode());
+        assertThat(project.isHidden()).isFalse();
+        assertThat(project.toString()).isEqualTo("Project(uid=1, team=team, status=status, title=title, description=description, hidden=false)");
+        assertThat(project.hashCode()).isNotEqualTo(new Project(1L,"teamw","status","title","description", false).hashCode());
         assertDoesNotThrow(() -> project.setDescription("description"));
         assertDoesNotThrow(() -> project.setTeam("team"));
         assertDoesNotThrow(() -> project.setStatus("status"));
         assertDoesNotThrow(() -> project.setTitle("title"));
         assertDoesNotThrow(() -> project.setUid(1L));
-        assertThat(project.equals(new Project(1L,"team","status","title","description"))).isTrue();
-        assertThat(new Project(1L,"team","status","title","description")).isEqualTo(project);
+        assertDoesNotThrow(() -> project.setHidden(false));
+        assertThat(project.equals(new Project(1L,"team","status","title","description", false))).isTrue();
+        assertThat(new Project(1L,"team","status","title","description", false)).isEqualTo(project);
     }
 }

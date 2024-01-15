@@ -25,10 +25,13 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @PostMapping("/employees")
-    public void postEmployee(@RequestBody EmployeeSimplified employee)
+    @PostMapping("/employees/{userId}")
+    public void postEmployee(@RequestBody EmployeeSimplified employee, @PathVariable Long userId)
     {
-        employeeInterface.saveEmployee(employee);
+        Optional<Employee> userEmployee = employeeInterface.getEmployeeById(userId);
+        if(userEmployee.isPresent() && userEmployee.get().getSecurityAccess().equals("HR")) {
+            employeeInterface.saveEmployee(employee);
+        }
     }
     @Operation(summary = "Retrieves all employees from the database",
             description = "Retrieves all employees from the database as a list. " +
@@ -37,10 +40,14 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public List<Employee> getAllEmployees()
+    @RequestMapping(value = "/employees/{userId}", method = RequestMethod.GET)
+    public List<Employee> getAllEmployees(@PathVariable Long userId)
     {
-        return employeeInterface.getEmployeeList();
+        Optional<Employee> userEmployee = employeeInterface.getEmployeeById(userId);
+        if(userEmployee.isPresent()) {
+            return employeeInterface.getEmployeeList();
+        }
+        return null;
     }
     @Operation(summary = "Retrieves one employee from the database using its id",
             description = "Gets one employee from the database using id (the primary key). " +
@@ -49,10 +56,14 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/employees/{employeeId}", method = RequestMethod.GET)
-    public Optional<Employee> getEmployeeById(@PathVariable Long employeeId)
+    @RequestMapping(value = "/employees/{employeeId}/{userId}", method = RequestMethod.GET)
+    public Optional<Employee> getEmployeeById(@PathVariable Long employeeId, @PathVariable Long userId)
     {
-        return employeeInterface.getEmployeeById(employeeId);
+        Optional<Employee> userEmployee = employeeInterface.getEmployeeById(userId);
+        if(userEmployee.isPresent()) {
+            return employeeInterface.getEmployeeById(employeeId);
+        }
+        return Optional.empty();
     }
     @Operation(summary = "Updates the employee with the given id",
             description = "Updates the employee with the given id with the" +
@@ -62,10 +73,16 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/employees/{employeeId}", method = RequestMethod.PUT)
-    public Optional<Employee> updateEmployeeById(@PathVariable Long employeeId, @RequestBody EmployeeSimplified employee)
+    @RequestMapping(value = "/employees/{employeeId}/{userId}", method = RequestMethod.PUT)
+    public Optional<Employee> updateEmployeeById(@PathVariable Long employeeId,
+                                                 @RequestBody EmployeeSimplified employee,
+                                                 @PathVariable Long userId)
     {
-        return employeeInterface.updateEmployeeById(employee, employeeId);
+        Optional<Employee> userEmployee = employeeInterface.getEmployeeById(userId);
+        if(userEmployee.isPresent() && userEmployee.get().getSecurityAccess().equals("HR")) {
+            return employeeInterface.updateEmployeeById(employee, employeeId);
+        }
+        return Optional.empty();
     }
     @Operation(summary = "Retrieves one employee from the database using its username",
             description = "Gets one employee from the database using username. " +
@@ -74,10 +91,15 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/employees/{employeeUsername}", method = RequestMethod.GET)
-    public Optional<Employee> getEmployeeByUsername(@PathVariable String employeeUsername)
+    @RequestMapping(value = "/employees/{employeeUsername}/{userId}", method = RequestMethod.GET)
+    public Optional<Employee> getEmployeeByUsername(@PathVariable String employeeUsername,
+                                                    @PathVariable Long userId)
     {
-        return employeeInterface.findEmployeeByUsername(employeeUsername);
+        Optional<Employee> userEmployee = employeeInterface.getEmployeeById(userId);
+        if(userEmployee.isPresent()) {
+            return employeeInterface.findEmployeeByUsername(employeeUsername);
+        }
+        return Optional.empty();
     }
     @Operation(summary = "Deletes one employee by id",
             description = "Deletes one employee by id. " +
@@ -86,9 +108,12 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/employees/{employeeId}", method = RequestMethod.DELETE)
-    public void deleteEmployeeById(@PathVariable Long employeeId)
+    @RequestMapping(value = "/employees/{employeeId}/{userId}", method = RequestMethod.DELETE)
+    public void deleteEmployeeById(@PathVariable Long employeeId, @PathVariable Long userId)
     {
-        employeeInterface.deleteEmployeeById(employeeId);
+        Optional<Employee> employee = employeeInterface.getEmployeeById(userId);
+        if(employee.isPresent() && employee.get().getSecurityAccess().equals("HR")) {
+            employeeInterface.deleteEmployeeById(employeeId);
+        }
     }
 }
