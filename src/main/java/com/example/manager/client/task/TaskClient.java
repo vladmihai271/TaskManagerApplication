@@ -24,10 +24,21 @@ public class TaskClient implements TaskInterface {
         List<Task> allTasks = (List<Task>) taskRepository.findAll();
         for(Task taskIn : allTasks){
             if(taskIn.getTitle().equals(task.getTitle())){
-                return Optional.empty();
+                if(taskIn.getProject().equals(task.getProject()))
+                {
+                    return Optional.empty();
+                }
+                else
+                {
+                    taskIn.setTitle(taskIn.getTitle() + " (from " + taskIn.getProject() + ")");
+                    updateTaskById(taskIn.getUid(), taskIn);
+                    taskService.addTaskToEmployee(task);
+                    taskService.addTaskToSprint(task);
+                    return Optional.of(taskRepository.save(task));
+                }
             }
         }
-        taskService.addTaskToEmployee(task); //ADD TASK TO SPRINT AND/OR PROJECT WHEN IMPLEMENTED
+        taskService.addTaskToEmployee(task);
         taskService.addTaskToSprint(task);
         return Optional.of(taskRepository.save(task));
     }
