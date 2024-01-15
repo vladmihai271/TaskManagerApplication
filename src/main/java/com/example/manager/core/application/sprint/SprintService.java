@@ -2,14 +2,12 @@ package com.example.manager.core.application.sprint;
 
 import com.example.manager.core.application.repositories.SprintRepository;
 import com.example.manager.core.application.repositories.TaskRepository;
-import com.example.manager.core.domain.Employee;
 import com.example.manager.core.domain.Sprint;
 import com.example.manager.core.domain.SprintSimplified;
 import com.example.manager.core.domain.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

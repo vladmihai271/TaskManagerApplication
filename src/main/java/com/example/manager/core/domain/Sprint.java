@@ -12,9 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sprint", schema="public")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Sprint {
     @Id
     private Long uid;

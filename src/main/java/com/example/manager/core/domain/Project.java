@@ -12,9 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "project", schema="public")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Project {
     @Id
     private Long uid;

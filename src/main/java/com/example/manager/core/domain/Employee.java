@@ -14,9 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "employee", schema="public")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Employee {
     @Id
     private Long uid;
