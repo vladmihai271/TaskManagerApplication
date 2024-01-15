@@ -26,5 +26,5 @@ public class Employee {
     private String surname;
     private String username;
     private String password;
-
+    private String securityAccess;
 }

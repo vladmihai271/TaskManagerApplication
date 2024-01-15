@@ -56,6 +56,11 @@ databaseChangeLog:
                      constraints:
                        nullable: false
                 -  column:
+                     name: security_access
+                     type: varchar
+                     constraints:
+                       nullable: false
+                -  column:
                      name: username
                      type: varchar
                      constraints:

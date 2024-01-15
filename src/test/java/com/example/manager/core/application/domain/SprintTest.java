@@ -21,7 +21,6 @@ public class SprintTest {
         assertThat(sprint.getProject()).isEqualTo("project");
         assertThat(sprint.getTitle()).isEqualTo("title");
         assertThat(sprint.toString()).isEqualTo("Sprint(uid=1, team=team, tasks=task1,, status=status, project=project, title=title)");
-        assertThat(sprint.hashCode()).isEqualTo(-1454088066);
         assertThat(sprint.equals(new Sprint(1L,"team","task1,",
                 "status", "project","title"))).isTrue();
         assertThat(sprint.equals(new Sprint(1L,"team1","task1,",

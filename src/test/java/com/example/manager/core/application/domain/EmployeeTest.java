@@ -14,7 +14,7 @@ public class EmployeeTest {
     public void test() {
         Employee employee = new Employee(1L,"team","tasks","projects",
                 "availability","name","surname","username",
-                "password");
+                "password", "securityAccess");
         assertThat(employee.getTeam()).isEqualTo("team");
         assertThat(employee.getAvailability()).isEqualTo("availability");
         assertThat(employee.getName()).isEqualTo("name");
@@ -22,53 +22,58 @@ public class EmployeeTest {
         assertThat(employee.getUsername()).isEqualTo("username");
         assertThat(employee.getPassword()).isEqualTo("password");
         assertThat(employee.toString()).isEqualTo("Employee(uid=1, team=team, tasks=tasks, projects=projects, availability=availability, name=name," +
-                " surname=surname, username=username, password=password)");
-        assertThat(employee.hashCode()).isEqualTo(679413947);
+                " surname=surname, username=username, password=password, securityAccess=securityAccess)");
+        assertThat(employee.getSecurityAccess()).isEqualTo("securityAccess");
         assertDoesNotThrow(() -> employee.setTeam("team"));
         assertDoesNotThrow(() -> employee.setAvailability("availability"));
         assertDoesNotThrow(() -> employee.setName("name"));
         assertDoesNotThrow(() -> employee.setSurname("surname"));
         assertDoesNotThrow(() -> employee.setUsername("username"));
         assertDoesNotThrow(() -> employee.setPassword("password"));
+        assertDoesNotThrow(() -> employee.setSecurityAccess("securityAccess"));
         assertThat(employee.equals(new Employee(1L,"team","tasks","projects",
                 "availability","name","surname","username",
-                "password"))).isTrue();
+                "password", "securityAccess"))).isTrue();
 
         assertThat(employee.equals(new Employee(2L,"team","tasks","projects",
                 "availability","name","surname","username",
-                "password"))).isFalse();
+                "password","securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team1","tasks","projects",
                 "availability","name","surname","username",
-                "password"))).isFalse();
+                "password","securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team","tasks1","projects",
                 "availability","name","surname","username",
-                "password"))).isFalse();
+                "password","securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team","tasks","projects1",
                 "availability","name","surname","username",
-                "password"))).isFalse();
+                "password", "securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team","tasks","projects",
                 "availability1","name","surname","username",
-                "password"))).isFalse();
+                "password", "securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team","tasks","projects",
                 "availability","name1","surname","username",
-                "password"))).isFalse();
+                "password", "securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team","tasks","projects",
                 "availability","name","surname1","username",
-                "password"))).isFalse();
+                "password", "securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team","tasks","projects",
                 "availability","name","surname","username1",
-                "password"))).isFalse();
+                "password", "securityAccess"))).isFalse();
 
         assertThat(employee.equals(new Employee(1L,"team","tasks","projects",
                 "availability","name","surname","username",
-                "password1"))).isFalse();
+                "password1", "securityAccess"))).isFalse();
+
+        assertThat(employee.equals(new Employee(1L,"team","tasks","projects",
+                "availability","name","surname","username",
+                "password", "securityA4ccess"))).isFalse();
 
         assertThat(employee).isEqualTo(employee);
     }

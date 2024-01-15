@@ -46,14 +46,14 @@ public class TaskServiceTest {
     public void addTaskToEmployeeTestSuccess() {
         Task task = new Task(1L,"task1","description","sprint","status","project","asignee",3);
         Mockito.when(employeeRepository.findByUsername("asignee")).thenReturn(new Employee(1L,"team","task1,","projects",
-                "availability","name","surname","username","password"));
+                "availability","name","surname","username","password", "securityAccess"));
         assertDoesNotThrow(() -> taskService.addTaskToEmployee(task));
     }
     @Test
     public void addTaskToEmployeeTestSuccessSecondCase() {
         Task task = new Task(1L,"task1","description","sprint","status","project","asignee",3);
         Mockito.when(employeeRepository.findByUsername("asignee")).thenReturn(new Employee(1L,"team","","projects",
-                "availability","name","surname","username","password"));
+                "availability","name","surname","username","password", "securityAccess"));
         assertDoesNotThrow(() -> taskService.addTaskToEmployee(task));
     }
     @Test
@@ -79,7 +79,7 @@ public class TaskServiceTest {
         Mockito.when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
         Mockito.when(employeeRepository.findAll()).thenReturn(List.of(new Employee(1L,"team","task1,","projects",
                 "availability","name","surname","username",
-                "password")));
+                "password", "securityAccess")));
         assertDoesNotThrow(() -> taskService.findEmployeeByTaskId(1L));
         assertThat(taskService.findEmployeeByTaskId(1L)).isEqualTo(Optional.of(1L));
     }
@@ -95,10 +95,10 @@ public class TaskServiceTest {
                 "status","project","asignee",3);
         Mockito.when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
         Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(new Employee(1L,"team","task1,","projects",
-                "availability","name","surname","username","password")));
+                "availability","name","surname","username","password", "securityAccess")));
         Mockito.when(employeeRepository.findAll()).thenReturn(List.of(new Employee(1L,"team","task1,","projects",
                 "availability","name","surname","username",
-                "password")));
+                "password", "securityAccess")));
         assertDoesNotThrow(() -> taskService.deleteTaskFromEmployee(1L));
     }
     @Test

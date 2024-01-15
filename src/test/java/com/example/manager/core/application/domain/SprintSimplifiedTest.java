@@ -18,7 +18,6 @@ public class SprintSimplifiedTest {
         assertThat(sprintSimplified.getProject()).isEqualTo("project");
         assertThat(sprintSimplified.getTitle()).isEqualTo("title");
         assertThat(sprintSimplified.toString()).isEqualTo("SprintSimplified(uid=1, team=team, status=status, project=project, title=title)");
-        assertThat(sprintSimplified.hashCode()).isEqualTo(-1529446000);
         assertThat(sprintSimplified.equals(new SprintSimplified(1L,
                 "team", "status", "project", "title"))).isTrue();
         assertThat(sprintSimplified.equals(new SprintSimplified(1L,

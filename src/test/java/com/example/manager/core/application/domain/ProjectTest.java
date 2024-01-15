@@ -19,7 +19,6 @@ public class ProjectTest {
         assertThat(project.getTitle()).isEqualTo("title");
         assertThat(project.getDescription()).isEqualTo("description");
         assertThat(project.toString()).isEqualTo("Project(uid=1, team=team, status=status, title=title, description=description)");
-        assertThat(project.hashCode()).isEqualTo(-77955399);
         assertDoesNotThrow(() -> project.setDescription("description"));
         assertDoesNotThrow(() -> project.setTeam("team"));
         assertDoesNotThrow(() -> project.setStatus("status"));

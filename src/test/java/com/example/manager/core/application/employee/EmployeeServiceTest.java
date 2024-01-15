@@ -35,7 +35,7 @@ public class EmployeeServiceTest {
     @Test
     public void deleteEmployeeByIdTestSuccess() {
         Optional<Employee> employee = Optional.of(new Employee(1L, "team", "tasks,",
-                "projects","availability", "name", "surname", "username", "password"));
+                "projects","availability", "name", "surname", "username", "password", "securityAccess"));
         Task task = new Task(2L, "title", "description", "sprint", "status", "project", "asignee",3);
         Mockito.when(employeeRepository.findById(1L)).thenReturn(employee);
         Mockito.when(taskRepository.findByTitle("tasks")).thenReturn(task);
@@ -51,35 +51,35 @@ public class EmployeeServiceTest {
     @Test
     public void fillUnusedFieldsTestSuccess() {
         EmployeeSimplified employeeSimplified = new EmployeeSimplified("team", "availability",
-                "name", "surname", "username", "password");
+                "name", "surname", "username", "password", "securityAccess");
         Optional<Long> id = Optional.of(1L);
         assertThat(employeeService.fillUnusedFields(employeeSimplified, id)).isEqualTo(new Employee(1L, "team",
-                "","", "availability", "name", "surname", "username", "password"));
+                "","", "availability", "name", "surname", "username", "password", "securityAccess"));
     }
     @Test
     public void fillUnusedFieldsTestFailure() {
         EmployeeSimplified employeeSimplified = new EmployeeSimplified("team", "availability",
-                "name", "surname", "username", "password");
+                "name", "surname", "username", "password", "securityAccess");
         assertThat(employeeService.fillUnusedFields(employeeSimplified, Optional.empty())).isEqualTo(new Employee(0L, "team",
-                "","", "availability", "name", "surname", "username", "password"));
+                "","", "availability", "name", "surname", "username", "password", "securityAccess"));
     }
     @Test
     public void saveEmployeeSimplifiedTestSuccess() {
         EmployeeSimplified employeeSimplified = new EmployeeSimplified("team", "availability",
-                "name", "surname", "username", "password");
+                "name", "surname", "username", "password", "securityAccess");
         assertDoesNotThrow(() -> employeeService.saveEmployeeSimplified(employeeSimplified));
     }
     @Test
     public void saveEmployeeTestSuccess() {
-        Employee employee = new Employee(1L, "team", "","", "availability", "name", "surname", "username", "password");
+        Employee employee = new Employee(1L, "team", "","", "availability", "name", "surname", "username", "password", "securityAccess");
         Mockito.when(employeeRepository.save(employee)).thenReturn(employee);
         assertThat(employeeService.saveEmployee(employee)).isEqualTo(employee);
     }
     @Test
     public void completeMissingFieldsFromUpdateEmployeeObjectTestSuccess() {
         EmployeeSimplified employeeSimplified = new EmployeeSimplified("", "",
-                "", "", "", "");
-        Employee employee = new Employee(1L, "team", "","", "availability", "name", "surname", "username", "password");
+                "", "", "", "", "");
+        Employee employee = new Employee(1L, "team", "","", "availability", "name", "surname", "username", "password", "securityAccess");
         Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
         assertThat(employeeService.completeMissingFieldsFromUpdateEmployeeObject(1L, employeeSimplified)).isEqualTo(employee);
     }

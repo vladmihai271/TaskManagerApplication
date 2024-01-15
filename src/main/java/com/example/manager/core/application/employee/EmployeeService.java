@@ -38,14 +38,16 @@ public class EmployeeService {
         return new Employee(id.get(), employeeSimplified.getTeam(),
                 "","", employeeSimplified.getAvailability(),
                 employeeSimplified.getName(), employeeSimplified.getSurname(),
-                employeeSimplified.getUsername(), employeeSimplified.getPassword());
+                employeeSimplified.getUsername(), employeeSimplified.getPassword(),
+                employeeSimplified.getSecurityAccess());
         }
         else
         {
             return new Employee(0L, employeeSimplified.getTeam(),
                     "","", employeeSimplified.getAvailability(),
                     employeeSimplified.getName(), employeeSimplified.getSurname(),
-                    employeeSimplified.getUsername(), employeeSimplified.getPassword());
+                    employeeSimplified.getUsername(), employeeSimplified.getPassword(),
+                    employeeSimplified.getSecurityAccess());
         }
     }
     public Employee saveEmployeeSimplified(EmployeeSimplified employee) {

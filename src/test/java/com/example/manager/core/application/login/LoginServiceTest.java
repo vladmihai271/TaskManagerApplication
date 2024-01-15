@@ -22,7 +22,7 @@ public class LoginServiceTest {
     @Test
     public void checkEmployeeExistsTestSuccess() {
         Employee employee = new Employee(1L, "team", "tasks,",
-                "projects","availability", "name", "surname", "username", "password");
+                "projects","availability", "name", "surname", "username", "password", "securityAccess");
         assertThat(loginService.checkEmployeeExists(employee, "username", "password")).
                 isEqualTo(new ResponseEntity<>(Map.of("Authenticated", true, "Authentication message",
                         "Credentials are correct"), HttpStatus.OK));
@@ -30,7 +30,7 @@ public class LoginServiceTest {
     @Test
     public void checkEmployeeExistsTestFailure() {
         Employee employee = new Employee(1L, "team", "tasks,",
-                "projects","availability", "name", "surname", "username", "password");
+                "projects","availability", "name", "surname", "username", "password", "securityAccess");
         assertThat(loginService.checkEmployeeExists(employee, "username", "wrongPassword")).
                 isEqualTo(new ResponseEntity<>(Map.of("Authenticated", false, "Authentication message",
                         "Credentials are incorrect"), HttpStatus.OK));
