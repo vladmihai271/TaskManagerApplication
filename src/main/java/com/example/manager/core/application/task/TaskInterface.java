@@ -9,7 +9,7 @@ public interface TaskInterface {
     Optional<Task> saveTask(Task task);
     Optional<Task> getTaskById(Long id);
     Optional<Task> getTaskByTitle(String title);
-    List<Task> getAllTasks();
+    List<Task> getAllTasks(Long userId);
     Optional<Task> updateTaskById(Long id, Task task);
     void deleteTaskById(Long id);
 }

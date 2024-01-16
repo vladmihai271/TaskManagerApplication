@@ -1,11 +1,17 @@
 package com.example.manager.client.task;
 
+import com.example.manager.core.application.repositories.EmployeeRepository;
+import com.example.manager.core.application.repositories.ProjectRepository;
 import com.example.manager.core.application.repositories.TaskRepository;
 import com.example.manager.core.application.task.TaskInterface;
 import com.example.manager.core.application.task.TaskService;
+import com.example.manager.core.domain.Employee;
+import com.example.manager.core.domain.Project;
+import com.example.manager.core.domain.Sprint;
 import com.example.manager.core.domain.Task;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,10 +19,13 @@ import java.util.Optional;
 public class TaskClient implements TaskInterface {
     private final TaskRepository taskRepository;
     private final TaskService taskService;
-
-    public TaskClient(TaskRepository taskRepository, TaskService taskService) {
+    private final EmployeeRepository employeeRepository;
+    private final ProjectRepository projectRepository;
+    public TaskClient(TaskRepository taskRepository, TaskService taskService, EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.taskService = taskService;
+        this.employeeRepository = employeeRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -54,8 +63,26 @@ public class TaskClient implements TaskInterface {
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        return (List<Task>) taskRepository.findAll();
+    public List<Task> getAllTasks(Long userId) {
+        Optional<Employee> employee = employeeRepository.findById(userId);
+        if(employee.isPresent() && employee.get().getSecurityAccess().equals("Department Chief")){
+            return (List<Task>) taskRepository.findAll();
+        }
+        if(employee.isPresent() && !employee.get().getSecurityAccess().equals("Department Chief")){
+            List<Task> tasks = (List<Task>) taskRepository.findAll();
+            List<Task> tasksResult = new ArrayList<>();
+            for(Task task : tasks){
+                Project project = projectRepository.findByTitle(task.getProject());
+                if(!project.isHidden()) {
+                    tasksResult.add(task);
+                } else if (project.isHidden() && project.getTeam().equals(employee.get().getTeam())){
+                    tasksResult.add(task);
+
+                }
+            }
+            return tasksResult;
+        }
+        return new ArrayList<>();
     }
 
     @Override

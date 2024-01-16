@@ -16,6 +16,8 @@ public class LoginService {
             Map<String,Object> successfulLoginResponse = new HashMap<>();
             successfulLoginResponse.put("Authenticated",(boolean) true);
             successfulLoginResponse.put("Authentication message", (String) "Credentials are correct");
+            successfulLoginResponse.put("userId", loggedEmployee.getUid().toString());
+            successfulLoginResponse.put("AccessRights", loggedEmployee.getSecurityAccess());
             return new ResponseEntity<>(successfulLoginResponse, HttpStatus.OK);
         }
         else {

@@ -42,8 +42,22 @@ public class EmployeeClient implements EmployeeInterface {
     }
     @Override
     public Optional<Employee> updateEmployeeById(EmployeeSimplified employee, Long employeeId) {
+        Optional<Employee> employeeBeforeUpdate = employeeRepository.findById(employeeId);
+        if(employeeBeforeUpdate.isEmpty()){
+            return Optional.empty();
+        }
+        boolean teamChanged = false;
+        if(employee.getTeam()!=null && !employeeBeforeUpdate.get().getTeam().equals(employee.getTeam())){
+            teamChanged = true;
+        }
         Employee newEmployee = employeeService.completeMissingFieldsFromUpdateEmployeeObject(employeeId, employee);
+
+        if(teamChanged){
+            newEmployee.setProjects("");
+            employeeService.addProjectsToNewEmployee(newEmployee);
+        }
         if(employeeService.deleteEmployeeById(employeeId)){
+            newEmployee.setUid(employeeId);
             return Optional.of(employeeRepository.save(newEmployee));
         }
         else

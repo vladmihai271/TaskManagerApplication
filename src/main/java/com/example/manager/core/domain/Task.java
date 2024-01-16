@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "task", schema="public")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Task {
     @Id
     private Long uid;

@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public interface SprintInterface {
     // save operation
-    Sprint saveSprintSimplified(SprintSimplified sprint);
+    Optional<Sprint> saveSprintSimplified(SprintSimplified sprint);
 
     // read operation
-    List<Sprint> getSprintList();
-    Optional<Sprint> getSprintById(Long sprintId);
+    List<Sprint> getSprintList(Long userId);
+    Optional<Sprint> getSprintById(Long sprintId, Long userId);
 
     public Optional<Sprint> findSprintByTitle(String title);
 

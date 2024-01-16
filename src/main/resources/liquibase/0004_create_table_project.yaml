@@ -34,22 +34,22 @@ databaseChangeLog:
                      name: status
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: title
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: description
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: hidden
                      type: boolean
                      constraints:
-                       nullable: false
+                       nullable: true
        rollback:
          - dropTable:
              tableName: ${table_name}

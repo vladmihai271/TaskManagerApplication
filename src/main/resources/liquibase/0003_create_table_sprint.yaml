@@ -34,22 +34,22 @@ databaseChangeLog:
                      name: tasks
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: status
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: project
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: title
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
        rollback:
          - dropTable:
              tableName: ${table_name}

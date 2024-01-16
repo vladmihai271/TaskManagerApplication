@@ -3,7 +3,6 @@ package com.example.manager.core.domain;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +14,7 @@ import javax.persistence.Table;
 @Table(name = "employee", schema="public")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
     @Id
     private Long uid;

@@ -22,8 +22,15 @@ public class SprintService {
         this.taskRepository = taskRepository;
     }
 
-    public Sprint saveSprint(SprintSimplified sprintSimplified) {
-        return sprintRepository.save(new Sprint(sprintSimplified));
+    public Optional<Sprint> saveSprint(SprintSimplified sprintSimplified) {
+        List<Sprint> sprintList = (List<Sprint>) sprintRepository.findAll();
+        for (Sprint sprint : sprintList) {
+            if (sprint.getTitle().equals(sprintSimplified.getTitle())
+                    && sprint.getProject().equals(sprintSimplified.getProject())) {
+                return Optional.empty();
+            }
+        }
+        return Optional.of(sprintRepository.save(new Sprint(sprintSimplified)));
     }
 
     public List<Long> findTasksBySprintId(Long sprintId) {

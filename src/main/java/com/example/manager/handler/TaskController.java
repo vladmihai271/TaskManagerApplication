@@ -1,9 +1,10 @@
 package com.example.manager.handler;
 
-import com.example.manager.core.application.employee.EmployeeInterface;
+import com.example.manager.core.application.repositories.EmployeeRepository;
+import com.example.manager.core.application.repositories.ProjectRepository;
 import com.example.manager.core.application.task.TaskInterface;
 import com.example.manager.core.domain.Employee;
-import com.example.manager.core.domain.EmployeeSimplified;
+import com.example.manager.core.domain.Project;
 import com.example.manager.core.domain.Task;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,9 +18,13 @@ import java.util.Optional;
 public class TaskController {
 
     private final TaskInterface taskInterface;
+    private final EmployeeRepository employeeRepository;
+    private final ProjectRepository projectRepository;
 
-    public TaskController(TaskInterface taskInterface) {
+    public TaskController(TaskInterface taskInterface, EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
         this.taskInterface = taskInterface;
+        this.employeeRepository = employeeRepository;
+        this.projectRepository = projectRepository;
     }
 
 
@@ -30,10 +35,13 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @PostMapping("/tasks")
-    public void postTask(@RequestBody Task task)
+    @PostMapping("/tasks/{userId}")
+    public void postTask(@RequestBody Task task, @PathVariable Long userId)
     {
-        taskInterface.saveTask(task);
+        Optional<Employee> userEmployee = employeeRepository.findById(userId);
+        if(userEmployee.isPresent()) {
+            taskInterface.saveTask(task);
+        }
     }
 
 
@@ -45,10 +53,10 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public List<Task> getAllTasks()
+    @RequestMapping(value = "/tasks{userId}", method = RequestMethod.GET)
+    public List<Task> getAllTasks(@PathVariable Long userId)
     {
-        return taskInterface.getAllTasks();
+        return taskInterface.getAllTasks(userId);
     }
 
 
@@ -62,10 +70,25 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/tasks/{taskId}", method = RequestMethod.GET)
-    public Optional<Task> getTaskById(@PathVariable Long taskId)
+    @RequestMapping(value = "/tasks/{taskId}/{userId}", method = RequestMethod.GET)
+    public Optional<Task> getTaskById(@PathVariable Long taskId, @PathVariable Long userId)
     {
-        return taskInterface.getTaskById(taskId);
+        Optional<Employee> userEmployee = employeeRepository.findById(userId);
+        Optional<Task> task = taskInterface.getTaskById(taskId);
+        if(!task.isPresent()) {
+            return Optional.empty();
+        }
+        Project project = projectRepository.findByTitle(task.get().getProject());
+
+        if(userEmployee.isPresent() && !userEmployee.get().getSecurityAccess().equals("Department Chief")
+                && project!=null && project.isHidden() && !project.getTeam().equals(userEmployee.get().getTeam())) {
+            return Optional.empty();
+        }
+
+        if(userEmployee.isPresent()) {
+            return task;
+        }
+        return Optional.empty();
     }
 
 
@@ -80,10 +103,14 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/tasks/{employeeId}", method = RequestMethod.PUT)
-    public Optional<Task> updateTaskById(@PathVariable Long taskId, @RequestBody Task task)
+    @RequestMapping(value = "/tasks/{employeeId}/{userId}", method = RequestMethod.PUT)
+    public Optional<Task> updateTaskById(@PathVariable Long taskId, @RequestBody Task task, @PathVariable Long userId)
     {
-        return taskInterface.updateTaskById(taskId, task);
+        Optional<Employee> userEmployee = employeeRepository.findById(userId);
+        if(userEmployee.isPresent()) {
+            return taskInterface.updateTaskById(taskId, task);
+        }
+        return Optional.empty();
     }
 
 
@@ -96,10 +123,25 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/tasks/{taskTitle}", method = RequestMethod.GET)
-    public Optional<Task> getTaskByTitle(@PathVariable String taskTitle)
+    @RequestMapping(value = "/tasks/{taskTitle}/{userId}", method = RequestMethod.GET)
+    public Optional<Task> getTaskByTitle(@PathVariable String taskTitle, @PathVariable Long userId)
     {
-        return taskInterface.getTaskByTitle(taskTitle);
+        Optional<Employee> userEmployee = employeeRepository.findById(userId);
+        Optional<Task> task = taskInterface.getTaskByTitle(taskTitle);
+        if(!task.isPresent()) {
+            return Optional.empty();
+        }
+        Project project = projectRepository.findByTitle(task.get().getProject());
+
+        if(userEmployee.isPresent() && !userEmployee.get().getSecurityAccess().equals("Department Chief")
+            && project!=null && project.isHidden() && !project.getTeam().equals(userEmployee.get().getTeam())) {
+            return Optional.empty();
+        }
+
+        if(userEmployee.isPresent()) {
+            return task;
+        }
+        return Optional.empty();
     }
     @Operation(summary = "Deletes one task by id",
             description = "Deletes one task by id. " +
@@ -108,10 +150,13 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/tasks/{taskId}", method = RequestMethod.DELETE)
-    public void deleteTaskById(@PathVariable Long taskId)
+    @RequestMapping(value = "/tasks/{taskId}/{userId}", method = RequestMethod.DELETE)
+    public void deleteTaskById(@PathVariable Long taskId, @PathVariable Long userId)
     {
-        taskInterface.deleteTaskById(taskId);
+        Optional<Employee> userEmployee = employeeRepository.findById(userId);
+        if(userEmployee.isPresent()) {
+            taskInterface.deleteTaskById(taskId);
+        }
     }
 
 

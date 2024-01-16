@@ -38,7 +38,7 @@ public class SprintServiceTest {
         SprintSimplified sprintSimplified = new SprintSimplified(1L,"team","status","project", "title");
         Sprint sprint = new Sprint(sprintSimplified);
         Mockito.when(sprintRepository.save(sprint)).thenReturn(sprint);
-        assertThat(sprintService.saveSprint(sprintSimplified)).isEqualTo(sprint);
+        assertThat(sprintService.saveSprint(sprintSimplified)).isEqualTo(Optional.of(sprint));
     }
     @Test
     public void findTasksBySprintIdTestSuccess() {

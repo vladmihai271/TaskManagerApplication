@@ -1,6 +1,7 @@
 package com.example.manager.core.application.employee;
 
 import com.example.manager.core.application.repositories.EmployeeRepository;
+import com.example.manager.core.application.repositories.ProjectRepository;
 import com.example.manager.core.application.repositories.TaskRepository;
 import com.example.manager.core.domain.Employee;
 import com.example.manager.core.domain.EmployeeSimplified;
@@ -28,9 +29,12 @@ public class EmployeeServiceTest {
     @Mock
     @Getter
     private TaskRepository taskRepository;
+    @Mock
+    @Getter
+    private ProjectRepository projectRepository;
     @BeforeEach
     public void beforeEach(){
-        employeeService = new EmployeeService(employeeRepository, taskRepository);
+        employeeService = new EmployeeService(employeeRepository, taskRepository, projectRepository);
     }
     @Test
     public void deleteEmployeeByIdTestSuccess() {

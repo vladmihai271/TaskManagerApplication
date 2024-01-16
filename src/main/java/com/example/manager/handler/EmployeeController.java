@@ -26,12 +26,14 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
     @PostMapping("/employees/{userId}")
-    public void postEmployee(@RequestBody EmployeeSimplified employee, @PathVariable Long userId)
+    public Optional<Employee> postEmployee(@RequestBody EmployeeSimplified employee, @PathVariable Long userId)
     {
+
         Optional<Employee> userEmployee = employeeInterface.getEmployeeById(userId);
         if(userEmployee.isPresent() && userEmployee.get().getSecurityAccess().equals("HR")) {
-            employeeInterface.saveEmployee(employee);
+            return Optional.ofNullable(employeeInterface.saveEmployee(employee));
         }
+        return Optional.empty();
     }
     @Operation(summary = "Retrieves all employees from the database",
             description = "Retrieves all employees from the database as a list. " +

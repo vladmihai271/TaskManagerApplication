@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "sprint", schema="public")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Sprint {
     @Id
     private Long uid;

@@ -34,32 +34,32 @@ databaseChangeLog:
                      name: description
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: sprint
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: project
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: assignee
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: status
                      type: varchar
                      constraints:
-                       nullable: false
+                       nullable: true
                 -  column:
                      name: story_points
                      type: int
                      constraints:
-                       nullable: false
+                       nullable: true
        rollback:
          - dropTable:
              tableName: ${table_name}
