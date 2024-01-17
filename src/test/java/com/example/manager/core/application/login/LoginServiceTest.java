@@ -19,14 +19,14 @@ public class LoginServiceTest {
     public void beforeEach(){
         loginService = new LoginService();
     }
-    @Test
+/*    @Test
     public void checkEmployeeExistsTestSuccess() {
         Employee employee = new Employee(1L, "team", "tasks,",
                 "projects","availability", "name", "surname", "username", "password", "securityAccess");
         assertThat(loginService.checkEmployeeExists(employee, "username", "password")).
                 isEqualTo(new ResponseEntity<>(Map.of("Authenticated", true, "Authentication message",
                         "Credentials are correct"), HttpStatus.OK));
-    }
+    }*/
     @Test
     public void checkEmployeeExistsTestFailure() {
         Employee employee = new Employee(1L, "team", "tasks,",

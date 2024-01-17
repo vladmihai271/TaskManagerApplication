@@ -42,6 +42,7 @@ public class ProjectClient implements ProjectInterface {
         if(projectBeforeUpdate.isEmpty()){
             return Optional.empty();
         }
+        project = projectService.completeMissingFieldsFromUpdateProjectObject(uid, project);
         if(!projectBeforeUpdate.get().getTeam().equals(project.getTeam())){
             projectService.deleteProjectFromMembersOfTeam(projectBeforeUpdate.get());
             projectService.addProjectToMembersOfTeam(project);

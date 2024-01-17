@@ -96,6 +96,7 @@ public class TaskClient implements TaskInterface {
     @Override
     public void deleteTaskById(Long id) {
         taskService.deleteTaskFromEmployee(id);
+        taskService.deleteTaskFromSprint(id);
         taskRepository.deleteById(id);
     }
 }

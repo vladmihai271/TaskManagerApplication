@@ -2,9 +2,7 @@ package com.example.manager.core.application.sprint;
 
 import com.example.manager.core.application.repositories.SprintRepository;
 import com.example.manager.core.application.repositories.TaskRepository;
-import com.example.manager.core.domain.Sprint;
-import com.example.manager.core.domain.SprintSimplified;
-import com.example.manager.core.domain.Task;
+import com.example.manager.core.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,5 +56,43 @@ public class SprintService {
             }
         }
     }
+    public Sprint completeMissingFieldsFromUpdateSprintObject(Long id, SprintSimplified newSprintReceivedAtUpdate){
+        Optional<Sprint> sprintToBeChanged = sprintRepository.findById(id);
+        if(sprintToBeChanged.isEmpty()){
+            return null;
+        }
 
+        if(newSprintReceivedAtUpdate.getTeam() == null || newSprintReceivedAtUpdate.getTeam().isEmpty() ||
+                newSprintReceivedAtUpdate.getTeam().isBlank())
+        {
+            newSprintReceivedAtUpdate.setTeam(sprintToBeChanged.get().getTeam());
+        }
+        if(newSprintReceivedAtUpdate.getStatus() == null || newSprintReceivedAtUpdate.getStatus().isEmpty() ||
+                newSprintReceivedAtUpdate.getStatus().isBlank())
+        {
+            newSprintReceivedAtUpdate.setStatus(sprintToBeChanged.get().getStatus());
+        }
+        if(newSprintReceivedAtUpdate.getProject() == null || newSprintReceivedAtUpdate.getProject().isEmpty() ||
+                newSprintReceivedAtUpdate.getProject().isBlank())
+        {
+            newSprintReceivedAtUpdate.setProject(sprintToBeChanged.get().getProject());
+        }
+        if(newSprintReceivedAtUpdate.getTitle() == null || newSprintReceivedAtUpdate.getTitle().isEmpty() ||
+                newSprintReceivedAtUpdate.getTitle().isBlank())
+        {
+            newSprintReceivedAtUpdate.setTitle(sprintToBeChanged.get().getTitle());
+        }
+        if(newSprintReceivedAtUpdate.getUid() == null)
+        {
+            newSprintReceivedAtUpdate.setUid(sprintToBeChanged.get().getUid());
+        }
+
+        sprintToBeChanged.get().setStatus(newSprintReceivedAtUpdate.getStatus());
+        sprintToBeChanged.get().setTeam(newSprintReceivedAtUpdate.getTeam());
+        sprintToBeChanged.get().setProject(newSprintReceivedAtUpdate.getProject());
+        sprintToBeChanged.get().setTitle(newSprintReceivedAtUpdate.getTitle());
+        sprintToBeChanged.get().setUid(newSprintReceivedAtUpdate.getUid());
+
+        return sprintToBeChanged.get();
+    }
 }

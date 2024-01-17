@@ -103,7 +103,7 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/tasks/{employeeId}/{userId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tasks/{taskId}/{userId}", method = RequestMethod.PUT)
     public Optional<Task> updateTaskById(@PathVariable Long taskId, @RequestBody Task task, @PathVariable Long userId)
     {
         Optional<Employee> userEmployee = employeeRepository.findById(userId);

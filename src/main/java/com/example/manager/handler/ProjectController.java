@@ -37,12 +37,10 @@ public class ProjectController {
             if (userEmployee.isPresent() && userEmployee.get().getSecurityAccess().equals("Department Chief")
                     && project.isHidden()) {
                 visibleProjects.add(project);
-            }
-            if (userEmployee.isPresent()
+            } else if (userEmployee.isPresent()
                     && project.isHidden() && project.getTeam().equals(userEmployee.get().getTeam())) {
                 visibleProjects.add(project);
-            }
-            if(userEmployee.isPresent() && !project.isHidden()) {
+            } else if(userEmployee.isPresent() && !project.isHidden()) {
                 visibleProjects.add(project);
             }
 
