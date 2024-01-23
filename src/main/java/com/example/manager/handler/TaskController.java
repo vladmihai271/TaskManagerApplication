@@ -53,7 +53,7 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successfully received"),
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
-    @RequestMapping(value = "/tasks{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/{userId}", method = RequestMethod.GET)
     public List<Task> getAllTasks(@PathVariable Long userId)
     {
         return taskInterface.getAllTasks(userId);

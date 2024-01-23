@@ -48,6 +48,11 @@ public class ProjectClient implements ProjectInterface {
             projectService.addProjectToMembersOfTeam(project);
             projectService.deleteAllSprintsWithProject(projectBeforeUpdate.get());
         }
+        if(!projectBeforeUpdate.get().getTitle().equals(project.getTitle())){
+            projectService.deleteProjectFromMembersOfTeam(projectBeforeUpdate.get());
+            projectService.addProjectToMembersOfTeam(project);
+
+        }
         projectRepository.deleteById(uid);
         return Optional.of(projectRepository.save(project));
     }

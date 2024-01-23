@@ -6,6 +6,9 @@ import com.example.manager.core.domain.EmployeeSimplified;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -111,11 +114,13 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
     @RequestMapping(value = "/employees/{employeeId}/{userId}", method = RequestMethod.DELETE)
-    public void deleteEmployeeById(@PathVariable Long employeeId, @PathVariable Long userId)
+    public ResponseEntity<Void> deleteEmployeeById(@PathVariable Long employeeId, @PathVariable Long userId)
     {
         Optional<Employee> employee = employeeInterface.getEmployeeById(userId);
         if(employee.isPresent() && employee.get().getSecurityAccess().equals("HR")) {
             employeeInterface.deleteEmployeeById(employeeId);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
