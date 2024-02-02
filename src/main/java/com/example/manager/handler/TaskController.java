@@ -36,12 +36,13 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "Endpoint not exposed")
     })
     @PostMapping("/tasks/{userId}")
-    public void postTask(@RequestBody Task task, @PathVariable Long userId)
+    public Optional<Task> postTask(@RequestBody Task task, @PathVariable Long userId)
     {
         Optional<Employee> userEmployee = employeeRepository.findById(userId);
         if(userEmployee.isPresent()) {
-            taskInterface.saveTask(task);
+            return taskInterface.saveTask(task);
         }
+        return Optional.empty();
     }
 
 

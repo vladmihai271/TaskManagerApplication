@@ -22,6 +22,9 @@ public class ProjectClient implements ProjectInterface {
 
     @Override
     public Project saveProject(Project project) {
+        if(projectRepository.findByTitle(project.getTitle())!=null){
+            return null;
+        }
         projectService.addProjectToMembersOfTeam(project);
         return projectRepository.save(project);
     }

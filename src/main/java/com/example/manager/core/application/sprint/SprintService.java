@@ -23,7 +23,7 @@ public class SprintService {
     public Optional<Sprint> saveSprint(SprintSimplified sprintSimplified) {
         List<Sprint> sprintList = (List<Sprint>) sprintRepository.findAll();
         for (Sprint sprint : sprintList) {
-            if (sprint.getTitle().equals(sprintSimplified.getTitle())
+            if (sprint.getTitle().equals(sprintSimplified.getTitle()) && sprint.getProject()!=null && !sprint.getProject().isEmpty() && !sprint.getProject().isBlank()
                     && sprint.getProject().equals(sprintSimplified.getProject())) {
                 return Optional.empty();
             }
@@ -38,7 +38,10 @@ public class SprintService {
             String[] tasksList = tasksString.split("\\s*,\\s*");
             List<Long> taskIds = new ArrayList<>();
             for (String s : tasksList) {
-                taskIds.add(taskRepository.findByTitle(s).getUid());
+                Task task = taskRepository.findByTitle(s);
+                if(task!=null) {
+                    taskIds.add(task.getUid());
+                }
             }
             return taskIds;
         }

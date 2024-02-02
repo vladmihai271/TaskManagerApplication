@@ -30,6 +30,12 @@ public class TaskClient implements TaskInterface {
 
     @Override
     public Optional<Task> saveTask(Task task) {  //maybe should throw an exception is task title already exists
+        if(task.getProject()==null || task.getProject().isBlank() || task.getProject().isEmpty()){
+            return Optional.empty();
+        }
+        if(task.getSprint()==null || task.getSprint().isBlank() || task.getSprint().isEmpty()){
+            return Optional.empty();
+        }
         List<Task> allTasks = (List<Task>) taskRepository.findAll();
         for(Task taskIn : allTasks){
             if(taskIn.getTitle().equals(task.getTitle())){
