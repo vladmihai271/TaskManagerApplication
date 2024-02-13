@@ -58,7 +58,7 @@ export const employees = [
     role: "Solution architect", //mandatory
     department: "Human resources", //mandatory
     tasks: ["CS-23", "CS-153", "CS-53134"], //mandatory, can be empty
-    projects: ["caca"], //mandatory, can be empty
+    projects: ["ca"], //mandatory, can be empty
     availability: "on-site", //mandatory
     email: "mihai@ma-ta.com", //optional
     linkedin: "mihai@ma-ta.com", //optional
@@ -72,8 +72,8 @@ export const employees = [
     tasks: ["CS-23"], //mandatory, can be empty
     projects: ["caca"], //mandatory, can be empty
     availability: "on-site", //mandatory
-    email: "blabla",
-    linkedin: "mama",
+    email: "bl",
+    linkedin: "ma",
     phone: "123",
     teams: "123456",
   },

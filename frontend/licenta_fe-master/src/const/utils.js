@@ -18,6 +18,8 @@ export const getUserData = () => {
 
 export function hashPassword(password) {
   // Hash the password using SHA-256
+  console.log("before", password);
   const hashedPassword = SHA256(password).toString();
+  console.log("after", hashedPassword);
   return hashedPassword;
 }

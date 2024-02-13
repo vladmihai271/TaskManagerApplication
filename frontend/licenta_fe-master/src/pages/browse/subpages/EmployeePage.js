@@ -55,7 +55,7 @@ export default function EmployeePage(props) {
 
     if (updateResponse) {
       alert("Employee updated!");
-      window.location.reload();
+      // window.location.reload();
     } else {
       alert("Employee could not be updated!");
     }
@@ -154,7 +154,7 @@ export default function EmployeePage(props) {
               <span>Username:</span>
               <input
                 defaultValue={username}
-                onClick={(e) => {
+                onChange={(e) => {
                   setNewUsername(e.target.value);
                 }}
               />
@@ -170,7 +170,7 @@ export default function EmployeePage(props) {
               <span>Password:</span>
               <input
                 type="password"
-                onClick={(e) => {
+                onChange={(e) => {
                   setNewPassword(e.target.value);
                 }}
               />
@@ -186,7 +186,7 @@ export default function EmployeePage(props) {
               <span>Security access:</span>
               <select
                 defaultValue={securityAccess}
-                onClick={(e) => {
+                onChange={(e) => {
                   setNewSecurityAccess(e.target.value);
                 }}
               >
