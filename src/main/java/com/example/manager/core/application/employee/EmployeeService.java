@@ -25,11 +25,13 @@ public class EmployeeService {
         this.projectRepository = projectRepository;
     }
 
-    public boolean deleteEmployeeById(Long employeeId){
+    public boolean deleteEmployeeById(Long employeeId, boolean update){
         Optional<Employee> employeeToBeDeleted = employeeRepository.findById(employeeId);
         if(employeeToBeDeleted.isPresent())
         {
-            removeEmployeeFromHisTasks(employeeId);
+            if(!update) {
+                removeEmployeeFromHisTasks(employeeId);
+            }
             employeeRepository.deleteById(employeeId);
             return true;
         }

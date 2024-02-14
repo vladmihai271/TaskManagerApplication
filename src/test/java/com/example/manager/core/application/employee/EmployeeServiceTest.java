@@ -45,12 +45,12 @@ public class EmployeeServiceTest {
         Mockito.when(taskRepository.findByTitle("tasks")).thenReturn(task);
         doNothing().when(employeeRepository).deleteById(1L);
         doNothing().when(taskRepository).deleteById(2L);
-        assertThat(employeeService.deleteEmployeeById(1L)).isTrue();
+        assertThat(employeeService.deleteEmployeeById(1L, false)).isTrue();
     }
     @Test
     public void deleteEmployeeByIdTestFailure() {
         Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThat(employeeService.deleteEmployeeById(1L)).isFalse();
+        assertThat(employeeService.deleteEmployeeById(1L, false)).isFalse();
     }
     @Test
     public void fillUnusedFieldsTestSuccess() {

@@ -56,7 +56,7 @@ public class EmployeeClient implements EmployeeInterface {
             newEmployee.setProjects("");
             employeeService.addProjectsToNewEmployee(newEmployee);
         }
-        if(employeeService.deleteEmployeeById(employeeId)){
+        if(employeeService.deleteEmployeeById(employeeId, true)){
             newEmployee.setUid(employeeId);
             return Optional.of(employeeRepository.save(newEmployee));
         }
@@ -67,6 +67,6 @@ public class EmployeeClient implements EmployeeInterface {
     }
     @Override
     public void deleteEmployeeById(Long employeeId) {
-        employeeService.deleteEmployeeById(employeeId);
+        employeeService.deleteEmployeeById(employeeId, false);
     }
 }
